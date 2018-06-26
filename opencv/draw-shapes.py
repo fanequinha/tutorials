@@ -16,6 +16,7 @@ class Shape(Enum):
     LINE = 1
     CIRCLE = 2
     ELLIPSE = 3
+    POLYGON = 4
 
 def shape():
     return random.choice(list(Shape))
@@ -41,6 +42,11 @@ def draw_shape(frame, kind):
         cv2.circle(frame, (WIDTH/2,HEIGHT/2), HEIGHT/2, (255, 0, 0), 4)
     elif kind == Shape.ELLIPSE:
         cv2.ellipse(frame, (WIDTH/2,HEIGHT/2), (WIDTH/2,HEIGHT/2), 0, 0, WIDTH, HEIGHT, 4)
+    elif kind == Shape.POLYGON:
+        pts = np.array([[WIDTH/2, 0], [WIDTH, HEIGHT/3], [WIDTH-WIDTH/5, HEIGHT], [WIDTH/5, HEIGHT], [0, HEIGHT/3]], np.int32)
+        cv2.polylines(frame, [pts], True, (255, 0, 0), 4)
+    else:
+        raise Exception('Unknown shape: %s' % s)
 
 video = 'data/spain-vs-germany-2008.mp4'
 if not os.path.exists(video):
