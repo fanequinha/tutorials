@@ -48,6 +48,13 @@ def draw_shape(frame, kind):
     else:
         raise Exception('Unknown shape: %s' % s)
 
+def put_text(frame, text):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    size = 4
+    thick = 4
+    color = (64, 192, 255)
+    cv2.putText(frame, "Fanequinha", (WIDTH/2-150,HEIGHT/2+200), 1, size, color, thick, cv2.LINE_AA)
+
 video = 'data/spain-vs-germany-2008.mp4'
 if not os.path.exists(video):
     url = "https://www.youtube.com/watch?v=qRLbzpy1y8Y"
@@ -65,6 +72,9 @@ while (True):
  
     # Draw shape (line, circle, ellipse).
     draw_shape(frame, kind)
+
+    # Put text.
+    put_text(frame, 'OpenCV')
 
     # Display the resulting frame.
     cv2.imshow('frame', frame)
