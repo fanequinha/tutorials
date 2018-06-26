@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 import os
 import tempfile
+from subprocess import call
 
 def screenshot(img):
     dirname = tempfile._get_default_tempdir()
@@ -12,8 +13,17 @@ def screenshot(img):
     print('Screenshot %s' % filename)
     cv2.imwrite(filename, img)
 
-# URL: https://www.youtube.com/watch?v=qRLbzpy1y8Y
+def download(url, path):
+    print("Downloading video: %s" % url)
+    if not os.path.exists(os.path.dirname(video)):
+        os.mkdir(os.path.dirname(video))
+    call(["youtube-dl", url, "-o", video])
+    print("Video saved: %s" % video)
+
 video = 'data/spain-vs-germany-2008.mp4'
+if not os.path.exists(video):
+    url = "https://www.youtube.com/watch?v=qRLbzpy1y8Y"
+    download(url, video)
 cap = cv2.VideoCapture(video)
 
 while (True):
